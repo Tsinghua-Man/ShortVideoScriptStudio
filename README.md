@@ -2,26 +2,163 @@
 
 [![CI](https://github.com/Tsinghua-Man/ShortVideoScriptStudio/actions/workflows/ci.yml/badge.svg)](https://github.com/Tsinghua-Man/ShortVideoScriptStudio/actions/workflows/ci.yml)
 
-一个面向中文内容创作场景的短视频脚本生成智能体项目。
+一个面向中文创作者的短视频脚本生成智能体项目。
 
-它不是单纯的“文案模板合集”，而是把短视频脚本生成拆成了更容易迭代的几层：
+它把“短视频脚本生成”拆成了一套更容易落地、复用和继续迭代的工作台：
 
-- 智能体系统提示词
-- 结构化输入模板
-- 结构化输出约束
-- Python 生成引擎
-- 本地图形化网页界面
+- 结构化 brief 输入
+- 专业脚本生成逻辑
+- 中文图形化网页界面
+- 命令行生成入口
+- 可继续接入大模型或工作流的提示词包模式
 
-当前版本已经支持根据主题、产品、平台、目标、时长、痛点、卖点等信息，生成一版可直接改写的专业短视频脚本草案，也支持生成提示词包，便于后续接入大模型平台或自动化工作流。
+如果你想快速做出一版可拍、可改、可继续优化的短视频脚本，而不是只得到几段泛泛的文案，这个项目就是为这件事设计的。
 
-## 功能亮点
+## 为什么这个项目值得看
 
-- 中文化脚本 brief 输入：支持主题、产品、平台、目标、脚本类型、用户画像、痛点、卖点、证据点等字段
-- 专业脚本输出结构：自动生成需求理解、内容策略、主脚本表格、备选开头、标题建议、拍摄与剪辑提示
-- 多模式生成：支持 `draft` 脚本草案模式和 `prompt` 提示词包模式
-- 图形化网页界面：可通过本地 Web UI 填表生成，也支持直接双击 `index.html` 离线使用
-- 平台适配：内置抖音、小红书、视频号、快手、B站的基础节奏偏好
-- 信息兜底：当输入不完整时，会自动补默认假设而不是直接拒绝生成
+很多“脚本生成工具”只会输出几段像广告词的文本，但真实短视频创作更需要的是：
+
+- 先理解视频目标，而不是直接堆文案
+- 先理解用户痛点，而不是只写产品卖点
+- 输出能拍、能剪、能口播的脚本结构
+- 在信息不完整时仍然能继续生成，而不是直接卡住
+
+这个项目当前已经支持：
+
+- 根据平台、目标、时长、脚本类型生成结构化脚本
+- 输出需求理解、内容策略、主脚本表格、备选开头、标题建议、拍摄提示
+- 支持 `draft` 脚本草案模式和 `prompt` 提示词包模式
+- 支持本地 Web UI 填表生成
+- 支持直接双击 `index.html` 离线使用
+
+## 适合谁
+
+- 想快速出短视频脚本初稿的内容创作者
+- 做口播、带货、测评、剧情、探店内容的账号操盘者
+- 想把“脚本生成能力”接进工作流、大模型平台或智能体系统的开发者
+- 想做中文创作型 AI 产品原型的人
+
+## 一眼看懂它能做什么
+
+```mermaid
+flowchart LR
+  A["填写 Brief<br/>主题 / 产品 / 平台 / 用户 / 痛点 / 卖点"] --> B["脚本生成引擎"]
+  B --> C["脚本草案 Draft<br/>可直接改写和拍摄"]
+  B --> D["提示词包 Prompt Packet<br/>可接入大模型工作流"]
+  A --> E["图形化网页界面"]
+  E --> B
+```
+
+## 核心亮点
+
+### 1. 输入方式更适合真实创作
+
+不是一句话提问，而是结构化填写：
+
+- 视频主题
+- 产品 / 服务
+- 发布平台
+- 视频目标
+- 脚本类型
+- 目标用户
+- 用户痛点
+- 核心卖点
+- 证明点
+- CTA
+
+这让生成出来的结果更像“短视频策划草案”，而不只是普通文案。
+
+### 2. 输出结构更像编导工作流
+
+生成结果不是一整坨文本，而是包含：
+
+- 需求理解
+- 内容策略
+- 主脚本表格
+- 备选开头
+- 标题建议
+- 拍摄与剪辑提示
+- 信息缺口与默认假设
+
+### 3. 两种运行模式，适合不同场景
+
+| 模式 | 适合场景 | 入口 |
+| --- | --- | --- |
+| 命令行模式 | 批量测试、接脚本、后续接 API | `src/short_video_agent.py` |
+| 本地网页模式 | 直观填表、演示、给非技术用户使用 | `src/web_app.py` |
+| 浏览器离线模式 | 不启动服务，直接打开网页就用 | `web/index.html` |
+
+### 4. 对不完整输入更友好
+
+当你没有把信息填满时，它不会直接停止，而是会：
+
+- 自动补充默认假设
+- 明确告诉你缺了什么
+- 方便下一轮继续优化
+
+## 快速体验
+
+### 方式一：最快体验网页界面
+
+```bash
+python src/web_app.py --open
+```
+
+Windows 也可以直接双击：
+
+- `start_web_ui.bat`
+
+默认地址：
+
+```text
+http://127.0.0.1:8123
+```
+
+### 方式二：直接双击 HTML 页面
+
+直接打开：
+
+```text
+web/index.html
+```
+
+页面会自动切换为“浏览器本地生成模式”，即使没有启动 Python 本地服务，也能正常生成脚本。
+
+### 方式三：命令行生成脚本
+
+```bash
+python src/short_video_agent.py --brief examples/sample_brief.json --mode draft
+```
+
+生成提示词包：
+
+```bash
+python src/short_video_agent.py --brief examples/sample_brief.json --mode prompt
+```
+
+保存到文件：
+
+```bash
+python src/short_video_agent.py --brief examples/sample_brief.json --mode draft --output output.md
+```
+
+## 输出示例
+
+脚本草案会生成这样的结构：
+
+```text
+# 专业短视频脚本草案
+
+## 需求理解
+## 内容策略
+## 主脚本
+## 备选开头
+## 标题建议
+## 拍摄与剪辑提示
+## 信息缺口与默认假设
+```
+
+这意味着它更适合继续打磨、给团队协作、或者接进下一步内容生产流程。
 
 ## 项目结构
 
@@ -48,76 +185,9 @@
 └─ USAGE_CN.md
 ```
 
-## 快速开始
+## 开发说明
 
-### 方式一：命令行生成脚本
-
-```bash
-python src/short_video_agent.py --brief examples/sample_brief.json --mode draft
-```
-
-输出提示词包：
-
-```bash
-python src/short_video_agent.py --brief examples/sample_brief.json --mode prompt
-```
-
-保存到文件：
-
-```bash
-python src/short_video_agent.py --brief examples/sample_brief.json --mode draft --output output.md
-```
-
-### 方式二：启动图形化网页界面
-
-```bash
-python src/web_app.py --open
-```
-
-Windows 下也可以直接双击：
-
-- `start_web_ui.bat`
-
-默认地址：
-
-```text
-http://127.0.0.1:8123
-```
-
-### 方式三：直接双击 HTML 页面
-
-直接打开：
-
-```text
-web/index.html
-```
-
-页面会自动切换为“浏览器本地生成模式”，即使没有启动 Python 本地服务，也可以正常填写表单并生成结果。
-
-## 使用说明
-
-详细中文使用教程见：
-
-- [USAGE_CN.md](./USAGE_CN.md)
-
-如果你是第一次使用，建议顺序如下：
-
-1. 先运行网页界面或命令行示例
-2. 查看 `examples/sample_brief.json`
-3. 修改为你的行业、产品、用户和目标
-4. 继续迭代提示词、模板或前端界面
-
-## 适用场景
-
-- 抖音口播脚本
-- 小红书经验分享脚本
-- 视频号信任转化型脚本
-- 测评类、剧情类、探店类短视频草案
-- 给大模型工作流准备结构化提示词输入
-
-## 开发
-
-### 本地基础检查
+### 本地检查
 
 ```bash
 python -m py_compile src/short_video_agent.py src/web_app.py
@@ -127,44 +197,43 @@ node --check web/client_generator.js
 node --check web/app.js
 ```
 
-### 运行说明
+### 关键文件职责
 
 - `src/short_video_agent.py`
-  - 命令行脚本生成入口
+  - 命令行生成入口和核心脚本逻辑
 - `src/web_app.py`
-  - 本地 Web 服务入口
+  - 本地 Web 服务和接口
+- `web/app.js`
+  - 前端交互和双模式启动逻辑
 - `web/client_generator.js`
   - 浏览器本地离线生成逻辑
 - `web/standalone_data.js`
-  - 直开 `index.html` 时使用的内置配置和示例数据
+  - 离线模式下使用的字段配置和示例数据
 
 ## GitHub Actions
 
-仓库包含一个基础 CI 工作流，会在 push 和 pull request 时自动执行：
+仓库已包含基础 CI，会在 push 和 pull request 时自动执行：
 
 - Python 语法检查
 - Web UI 烟雾测试
 - 前端脚本语法检查
-- 本地离线生成器最小验证
+- 离线生成器最小验证
+
+## 文档入口
+
+- 使用教程：[USAGE_CN.md](./USAGE_CN.md)
+- 贡献说明：[CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## Roadmap
 
 - 增加行业模板：美妆、教育、餐饮、本地生活、知识 IP 等
 - 一次生成多版本脚本
-- 更精细的平台风格开关
-- 输出区卡片化展示
+- 更细的平台风格开关
+- 结果区卡片化展示
 - 接入真实模型 API
-
-## 贡献
-
-欢迎提交 issue 和 PR。
-
-贡献前建议先阅读：
-
-- [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## License
 
 当前仓库暂未添加开源许可证。
 
-如果你准备对外公开分发或接受更广泛贡献，建议下一步补充明确的 License 文件。
+如果你准备正式公开分发或接受更广泛贡献，建议下一步补充 `LICENSE` 文件。
