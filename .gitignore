@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+
+output_draft.md
+output_prompt.md
+
+.DS_Store
+Thumbs.db

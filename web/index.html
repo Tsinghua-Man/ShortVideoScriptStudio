@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>短视频脚本生成工作台</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="background-orb background-orb-left"></div>
+      <div class="background-orb background-orb-right"></div>
+
+      <header class="hero card reveal reveal-1">
+        <div class="hero-copy">
+          <p class="eyebrow">Short Video Script Studio</p>
+          <h1>短视频脚本生成工作台</h1>
+          <p class="hero-text">
+            把示例文件变成可填写的中文表单。你只需要按字段输入主题、产品、痛点、卖点和平台信息，就能直接生成结构化脚本或提示词包。
+          </p>
+          <div class="hero-tips">
+            <span class="pill">中文字段展示</span>
+            <span class="pill">导入示例一键改写</span>
+            <span class="pill">本地生成更安心</span>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="hero-side-card">
+            <div class="metric-label">当前模式</div>
+            <div class="metric-value" id="modeLabel">脚本草案</div>
+          </div>
+          <div class="hero-side-card">
+            <div class="metric-label">已填写字段</div>
+            <div class="metric-value"><span id="filledCount">0</span>/<span id="fieldCount">0</span></div>
+          </div>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <section class="card panel panel-form reveal reveal-2">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">输入区</p>
+              <h2>脚本需求表单</h2>
+            </div>
+            <div class="panel-actions">
+              <button type="button" class="ghost-button" id="loadSampleButton">载入示例</button>
+              <button type="button" class="ghost-button" id="clearButton">清空表单</button>
+            </div>
+          </div>
+
+          <div class="status-banner" id="formStatus">
+            已载入示例内容，你可以直接修改后生成。
+          </div>
+
+          <form id="briefForm" class="brief-form"></form>
+        </section>
+
+        <aside class="card panel panel-result reveal reveal-3">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">输出区</p>
+              <h2>生成结果</h2>
+            </div>
+            <span class="mode-chip" id="modeChip">脚本草案</span>
+          </div>
+
+          <div class="result-actions">
+            <button type="button" class="primary-button" id="generateDraftButton">生成脚本</button>
+            <button type="button" class="secondary-button" id="generatePromptButton">生成提示词包</button>
+          </div>
+
+          <div class="result-toolbar">
+            <button type="button" class="ghost-button small" id="copyResultButton" disabled>复制结果</button>
+            <button type="button" class="ghost-button small" id="downloadResultButton" disabled>下载 Markdown</button>
+          </div>
+
+          <div class="result-meta" id="resultMeta">填写左侧表单后，点击“生成脚本”即可看到结果。</div>
+          <pre class="result-output" id="resultOutput">这里会显示生成后的脚本内容。</pre>
+        </aside>
+      </main>
+    </div>
+
+    <script src="./standalone_data.js"></script>
+    <script src="./client_generator.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
