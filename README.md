@@ -284,6 +284,7 @@ node --check web/app.js
 
 - 使用教程：[USAGE_CN.md](./USAGE_CN.md)
 - 贡献说明：[CONTRIBUTING.md](./CONTRIBUTING.md)
+- 项目深度讲解：[docs/项目详解与本科生快速上手指南.md](./docs/%E9%A1%B9%E7%9B%AE%E8%AF%A6%E8%A7%A3%E4%B8%8E%E6%9C%AC%E7%A7%91%E7%94%9F%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97.md)
 
 ## Roadmap
 
