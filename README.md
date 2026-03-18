@@ -1,10 +1,18 @@
-# ShortVideoScriptStudio
+<div align="center">
+  <h1>短视频脚本生成工作台</h1>
+  <p><strong>ShortVideoScriptStudio</strong></p>
+  <p>从结构化 Brief 到可拍、可剪、可继续优化的短视频脚本</p>
+  <p>A Chinese-first studio for turning content briefs into shoot-ready short video scripts.</p>
+  <p>
+    <a href="https://github.com/Tsinghua-Man/ShortVideoScriptStudio/actions/workflows/ci.yml">
+      <img alt="CI" src="https://github.com/Tsinghua-Man/ShortVideoScriptStudio/actions/workflows/ci.yml/badge.svg" />
+    </a>
+  </p>
+</div>
 
-[![CI](https://github.com/Tsinghua-Man/ShortVideoScriptStudio/actions/workflows/ci.yml/badge.svg)](https://github.com/Tsinghua-Man/ShortVideoScriptStudio/actions/workflows/ci.yml)
+一个面向中文创作者、内容团队和 AI 产品原型开发者的短视频脚本生成智能体项目。
 
-一个面向中文创作者的短视频脚本生成智能体项目。
-
-它把“短视频脚本生成”拆成了一套更容易落地、复用和继续迭代的工作台：
+它不是只给你几段“像广告词”的文本，而是把短视频脚本生成拆成一套更适合真实创作工作流的工作台：
 
 - 结构化 brief 输入
 - 专业脚本生成逻辑
@@ -12,16 +20,67 @@
 - 命令行生成入口
 - 可继续接入大模型或工作流的提示词包模式
 
-如果你想快速做出一版可拍、可改、可继续优化的短视频脚本，而不是只得到几段泛泛的文案，这个项目就是为这件事设计的。
+如果你想快速做出一版可拍、可改、可协作、可继续优化的短视频脚本，这个项目就是围绕这件事设计的。
+
+## 产品预览
+
+![ShortVideoScriptStudio Web UI Preview](./assets/web-ui-preview.png)
+
+上图展示的是项目当前的本地网页工作台：左侧填写主题、平台、目标用户、痛点和卖点，右侧直接生成脚本结果。  
+页面支持两种使用方式：
+
+- 启动本地 Web 服务后在浏览器中使用
+- 直接双击 `web/index.html` 进入浏览器本地生成模式
+
+## 使用前后对比
+
+### 输入前：创作者通常只有一份零散需求
+
+```text
+主题：敏感肌修护精华分享
+平台：抖音
+目标：转化
+时长：45 秒
+用户：25-35 岁容易泛红的女性上班族
+痛点：泛红、卡粉、总踩雷
+卖点：轻薄不黏、妆前可用、舒缓感更明显
+```
+
+### 生成后：工具会整理成可继续拍摄和改稿的脚本结构
+
+```text
+需求理解
+- 视频目标
+- 目标用户
+- 核心主题
+- 核心痛点
+- 核心卖点
+
+内容策略
+- 核心角度
+- 情绪抓手
+- 平台适配
+
+主脚本
+- 按时间段拆分镜头、口播、字幕重点、节奏建议
+
+补充输出
+- 备选开头
+- 标题建议
+- 拍摄与剪辑提示
+- 默认假设与信息缺口
+```
+
+这让结果更像“可执行的短视频脚本草案”，而不只是几段散乱文案。
 
 ## 为什么这个项目值得看
 
-很多“脚本生成工具”只会输出几段像广告词的文本，但真实短视频创作更需要的是：
+很多“脚本生成工具”只会直接堆文案，但真实短视频创作更需要的是：
 
-- 先理解视频目标，而不是直接堆文案
+- 先理解视频目标，而不是直接输出词藻
 - 先理解用户痛点，而不是只写产品卖点
 - 输出能拍、能剪、能口播的脚本结构
-- 在信息不完整时仍然能继续生成，而不是直接卡住
+- 在信息不完整时仍然继续生成，而不是卡住
 
 这个项目当前已经支持：
 
@@ -164,6 +223,8 @@ python src/short_video_agent.py --brief examples/sample_brief.json --mode draft 
 
 ```text
 .
+├─ assets/
+│  └─ web-ui-preview.png
 ├─ agent/
 │  ├─ system_prompt.md
 │  ├─ input_template.json
