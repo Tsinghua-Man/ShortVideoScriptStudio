@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Python Syntax Check
+        run: python -m py_compile src/short_video_agent.py src/web_app.py
+
+      - name: Web UI Smoke Test
+        run: python src/web_app.py --check
+
+      - name: Frontend Syntax Check
+        run: |
+          node --check web/standalone_data.js
+          node --check web/client_generator.js
+          node --check web/app.js
+
+      - name: Offline Generator Check
+        run: |
+          node -e "global.window=global; const fs=require('fs'); eval(fs.readFileSync('web/standalone_data.js','utf8')); eval(fs.readFileSync('web/client_generator.js','utf8')); const gen=window.ShortVideoClientGenerator; const sample=window.ShortVideoStandaloneData.sampleBrief; const draft=gen.renderDraft(sample); if (!draft.includes('# 专业短视频脚本草案')) { throw new Error('draft output missing title'); } const brief=gen.normalizeBrief({topic:'测试',pain_points:'第一条\n第二条',selling_points:'卖点一\n卖点二'}); if (brief.pain_points.length !== 2 || brief.selling_points.length !== 2) { throw new Error('newline split failed'); }"
